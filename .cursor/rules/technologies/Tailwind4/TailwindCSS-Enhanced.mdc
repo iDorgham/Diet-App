@@ -1,0 +1,90 @@
+---
+description: Apply Tailwind utilities when styling to keep layouts simple and uniform
+globs: src/**/*.{tsx,jsx,css}
+alwaysApply: false
+---
+
+# Tailwind CSS Enhanced Rules
+
+## Context
+
+- For styling with Tailwind CSS
+- Emphasizes utility classes for consistency and maintainability
+- Focuses on responsive design and accessibility
+
+## Requirements
+
+- Maintain consistent spacing (e.g., `p-4`, `m-2`, `space-y-4`)
+- Combine conditional classes with utility functions like `cn()` or `clsx()`
+- Use only custom colors defined in your design system
+- Ensure dark mode support via `.dark:` variants
+- Use responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`)
+- Prefer utility classes over custom CSS
+- Use semantic color names from your design system
+- Implement proper focus states for accessibility
+- Use consistent border radius and shadow patterns
+
+## Examples
+
+<example>
+  import { cn } from "@/lib/utils";
+  
+  interface ExampleBoxProps {
+    isActive: boolean;
+    variant?: "primary" | "secondary";
+  }
+  
+  export function ExampleBox({ isActive, variant = "primary" }: ExampleBoxProps) {
+    return (
+      <div 
+        className={cn(
+          "p-4 rounded-md transition-colors",
+          "focus:outline-none focus:ring-2 focus:ring-blue-500",
+          isActive ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-900",
+          variant === "secondary" && "border border-gray-300"
+        )}
+      >
+        Content
+      </div>
+    );
+  }
+</example>
+
+<example type="invalid">
+  <div style={{ padding: "20px", backgroundColor: "blue" }}>
+    Inline styled box
+  </div>
+  
+  <div className="p-4 bg-blue-500 text-white rounded-md">
+    Missing focus states and transitions
+  </div>
+</example>
+
+## Design System Integration
+
+- Use CSS custom properties for consistent theming
+- Implement proper color contrast ratios
+- Use consistent spacing scale (4, 8, 12, 16, 20, 24, 32, etc.)
+- Apply consistent typography scale
+- Use semantic spacing classes (`space-y-4`, `gap-4`)
+- Implement proper hover and focus states
+- Use consistent border radius patterns
+- Apply consistent shadow patterns
+
+## Responsive Design
+
+- Mobile-first approach with responsive prefixes
+- Use consistent breakpoints across components
+- Implement proper touch targets (minimum 44px)
+- Use responsive typography with `text-sm md:text-base`
+- Apply responsive spacing with `p-4 md:p-6`
+- Use responsive grid layouts with `grid-cols-1 md:grid-cols-2`
+
+## Accessibility
+
+- Ensure proper color contrast ratios
+- Use focus-visible for keyboard navigation
+- Implement proper ARIA attributes
+- Use semantic HTML elements
+- Provide alternative text for images
+- Ensure proper heading hierarchy

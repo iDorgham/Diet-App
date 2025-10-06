@@ -1,0 +1,50 @@
+---
+description: Unified development workflow standards (spec-driven, code quality, testing, git)
+globs: "**/*"
+alwaysApply: false
+---
+
+# Development Workflow Standards
+
+Author: rules/merge
+Version: 1.0.0
+
+## Scope
+Consolidates project development rules into one workflow guideline covering spec-driven development and day-to-day engineering practices.
+
+## Spec-Driven Development (Kiro)
+
+- Use EARS notation; follow Requirements → Design → Implementation.
+- Store specs in `.cursor/.specify/specs/` and validate before coding.
+- Maintain traceability between specs and implementation.
+
+## Code Quality Standards
+
+- Prefer TypeScript with strict typing.
+- Use meaningful names and comprehensive JSDoc for public APIs.
+- Enforce Prettier/ESLint formatting and lint cleanliness.
+- Implement robust error handling.
+
+## Testing Requirements
+
+- Write unit tests for core logic; integration/e2e where applicable.
+- Target ≥ 80% coverage; test success and failure paths.
+- Mock external dependencies appropriately.
+
+## Git Workflow
+
+- Conventional commits; feature branches for new work.
+- Require code review and keep commits atomic.
+- Update docs alongside code changes.
+
+## Architecture Principles
+
+- SOLID; separation of concerns; dependency injection where helpful.
+- Design for testability and maintainability; document decisions.
+
+## Security Guidelines
+
+- Validate all inputs; never commit secrets.
+- Use env vars for sensitive data; follow OWASP best practices.
+- Periodically update dependencies and audit.
+

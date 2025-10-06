@@ -1,0 +1,55 @@
+graph TB
+    subgraph "Frontend Layer"
+        A[React App] --> B[HomePage]
+        A --> C[TasksPage]
+        A --> D[RewardsPage]
+        A --> E[CoachPage]
+        A --> F[NutritionPage]
+        
+        B --> G[Header Component]
+        B --> H[MetricCards]
+        B --> I[NewsTicker]
+        B --> J[TaskList]
+        
+        C --> K[KanbanBoard]
+        C --> L[TaskCards]
+        
+        D --> M[RewardSystem]
+        D --> N[CoinShop]
+        
+        E --> O[AIChat]
+        E --> P[CoachInterface]
+    end
+    
+    subgraph "State Management"
+        Q[React Context] --> R[Progress State]
+        Q --> S[User Profile]
+        Q --> T[Task State]
+        Q --> U[Reward State]
+    end
+    
+    subgraph "Backend Services"
+        V[Firebase Auth] --> W[User Authentication]
+        X[Firestore] --> Y[User Data]
+        X --> Z[Progress Tracking]
+        X --> AA[Task Management]
+        X --> BB[Reward System]
+    end
+    
+    subgraph "External APIs"
+        CC[Grok AI API] --> DD[AI Coach]
+        EE[Recipe APIs] --> FF[Recipe Data]
+        GG[Market APIs] --> HH[Shopping Data]
+    end
+    
+    A --> Q
+    Q --> V
+    Q --> X
+    E --> CC
+    F --> EE
+    F --> GG
+    
+    style A fill:#085492,stroke:#71E6DE,color:#fff
+    style V fill:#71E6DE,stroke:#085492,color:#000
+    style X fill:#71E6DE,stroke:#085492,color:#000
+    style CC fill:#998B73,stroke:#085492,color:#fff

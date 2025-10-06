@@ -1,0 +1,132 @@
+---
+description: Always use for writing or updating Markdown files to ensure consistent formatting and readability across documentation
+globs: **/*.{md,mdx}
+alwaysApply: false
+---
+
+# Markdown Documentation Standards
+
+## Context
+
+- Applies to all `.md` and `.mdx` files
+- Ensures clear, structured, and consistent formatting
+- Focuses on readability and maintainability
+
+## Requirements
+
+- Follow standard Markdown syntax guidelines
+- Maintain logical document structure and readability
+- Use minimal, structured YAML front matter when needed
+- Leverage Mermaid diagrams for complex visual documentation
+- Use ATX-style headings (`# Heading`), maintaining proper hierarchy (max depth: 4)
+- Add blank lines before and after headings
+- Use blockquotes with emoji for callouts (Warning, Tip, Note)
+- Use triple backticks and specify language for code blocks
+- Indent properly within code blocks
+- Add blank lines before and after code blocks
+- Use inline code for short references
+- Use alignment indicators for tables (`:---`, `:---:`, `---:`)
+- Include header row and separator in tables
+- Keep tables simple with blank lines before and after
+
+## Examples
+
+<example>
+  # Main Heading
+
+  > 🚨 **Warning:** Critical information.
+  > 💡 **Tip:** Helpful suggestion.
+  > 📝 **Note:** Additional context.
+
+  ## Subheading
+
+  Use `inline code` for short references.
+
+  ```typescript
+  function example(): void {
+    console.log("Hello, World!");
+  }
+  ```
+
+  | Name  | Type   | Description   |
+  |:------|:------:|--------------:|
+  | id    | number | Primary key   |
+  | name  | string | User's name   |
+</example>
+
+<example type="invalid">
+  #Main Heading
+  > Warning: Critical information.
+  ##Subheading
+  Use inline code for short references.
+  ```typescript
+  function example(): void {
+  console.log("Hello, World!");
+  }
+  ```
+  | Name  | Type   | Description   |
+  | id    | number | Primary key   |
+  | name  | string | User's name   |
+</example>
+
+## Special Elements
+
+### Callouts
+
+Use blockquotes with emoji for important information:
+
+<example>
+  > 🚨 **Warning:** Critical information.
+  > 💡 **Tip:** Helpful suggestion.
+  > 📝 **Note:** Additional context.
+  > ⚠️ **Caution:** Potential issues.
+  > ✅ **Success:** Confirmation messages.
+</example>
+
+### Mermaid Diagrams
+
+Use Mermaid for architecture flows, decision trees, state machines, and AI agent rule flows.
+
+#### Diagram Best Practices
+
+1. Add a title (`--- title: Example ---`)
+2. Use descriptive node labels
+3. Comment complex flows
+4. Group related components in subgraphs
+5. Maintain consistent layout (`TD`, `LR`, `TB`)
+6. Keep diagrams focused
+
+<example>
+  ```mermaid
+  ---
+  title: Example Workflow
+  ---
+  graph TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Process 1]
+    B -->|No| D[Process 2]
+    C --> E[End]
+    D --> E
+  ```
+</example>
+
+<example type="invalid">
+  ```mermaid
+  graph TD
+  A-->B
+  B-->C
+  ```
+  
+  ❌ No title, unclear labels, no context.
+</example>
+
+## Documentation Structure
+
+- Use clear, descriptive headings
+- Maintain consistent heading hierarchy
+- Include table of contents for long documents
+- Use consistent formatting for lists and code blocks
+- Include proper metadata in front matter
+- Use consistent link formatting
+- Include proper alt text for images
+- Use consistent citation formatting

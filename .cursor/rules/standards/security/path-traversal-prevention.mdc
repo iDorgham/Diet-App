@@ -1,0 +1,14 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Path Traversal Prevention
+
+Path traversal attacks occur when user-controlled input is used to construct file paths, allowing attackers to access files outside the intended directory. This can lead to unauthorized file access, data leakage, or system compromise.
+
+## 1. Do Not Use User Input in File Paths
+
+**Rule:** Never use raw user input to construct file paths for read or write operations.
+
+... (full content preserved from original rule) ...

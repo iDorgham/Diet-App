@@ -1,0 +1,218 @@
+# Diet Game - Project Steering Document
+
+## Executive Summary
+
+**Project Name**: Diet Game (NutriQuest)  
+**Project Type**: AI-Powered Gamified Nutrition Application  
+**Project Status**: Active Development  
+**Last Updated**: December 2024  
+**Document Version**: 1.0  
+
+### Project Vision
+Transform healthy eating into an engaging, rewarding experience through AI-powered meal planning, gamified tracking, and personalized coaching that makes nutrition feel like an adventure rather than a chore.
+
+### Strategic Objectives
+- **Primary Goal**: Create a market-leading nutrition app that combines gamification, AI, and community features
+- **Target Users**: Health-conscious millennials, fitness enthusiasts, and busy professionals (ages 18-50)
+- **Success Metrics**: 10,000 active users, 40%+ retention at 30 days, $50K MRR by end of year 1
+
+## Project Scope & Boundaries
+
+### In Scope
+- **Core Features**: Gamified nutrition tracking, AI coaching, social community, meal planning
+- **Platforms**: Web application (primary), mobile apps (future), PWA capabilities
+- **User Segments**: Individual consumers, health coaches, families
+- **Geographic Focus**: English-speaking markets initially, international expansion planned
+
+### Out of Scope
+- **Medical Advice**: No diagnosis or treatment recommendations
+- **Fitness Tracking**: Focus on nutrition, not exercise (integration only)
+- **E-commerce**: No direct food purchasing (shopping lists only)
+- **Healthcare Integration**: No HIPAA compliance or medical record integration
+
+## Key Stakeholders
+
+### Primary Stakeholders
+- **Product Owner**: [Name] - Overall product vision and roadmap
+- **Development Team**: Full-stack developers, AI/ML engineers, UI/UX designers
+- **End Users**: Health-conscious individuals seeking sustainable nutrition habits
+
+### Secondary Stakeholders
+- **Health Professionals**: Nutritionists and coaches using the platform
+- **Investors**: Funding and strategic guidance
+- **Partners**: API providers, nutrition databases, wearable device manufacturers
+
+## Technical Architecture Decisions
+
+### Core Technology Stack
+- **Frontend**: React 18 + TypeScript + Tailwind CSS + Vite
+- **Backend**: Firebase (Authentication, Firestore, Storage)
+- **AI Services**: Grok API for personalized recommendations
+- **State Management**: Zustand + React Query
+- **Testing**: Vitest + Testing Library
+
+### Architecture Principles
+- **Spec-Driven Development**: All features follow Kiro methodology with EARS notation
+- **Component-Based**: Modular, reusable UI components
+- **API-First**: Well-defined contracts and interfaces
+- **Performance-Focused**: <3s load times, <500KB bundle size
+- **Security**: GDPR compliant, Firebase security rules, input validation
+
+## Business Model & Monetization
+
+### Revenue Streams
+1. **Freemium Subscriptions**: Basic features free, premium features paid
+2. **In-App Purchases**: Virtual currency, premium quests, exclusive content
+3. **B2B Partnerships**: White-label solutions for health coaches
+4. **Data Insights**: Anonymized nutrition trend data (future)
+
+### Pricing Strategy
+- **Free Tier**: Basic tracking, limited AI features, community access
+- **Premium Tier**: $9.99/month - Advanced AI coaching, unlimited quests, priority support
+- **Professional Tier**: $29.99/month - Coach tools, client management, analytics
+
+## Risk Management
+
+### High-Risk Areas
+1. **AI Accuracy**: Incorrect nutrition recommendations could harm user trust
+2. **User Adoption**: Difficulty changing established eating habits
+3. **Competition**: Established players with significant resources
+4. **Regulatory**: Health app regulations and compliance requirements
+
+### Mitigation Strategies
+- **AI Safety**: Extensive testing, professional validation, clear disclaimers
+- **User Experience**: Intuitive design, gradual onboarding, social motivation
+- **Competitive Advantage**: Focus on gamification and AI personalization
+- **Compliance**: Legal review, healthcare partnerships, transparent data practices
+
+## Success Criteria & KPIs
+
+### User Engagement
+- **Daily Active Users**: 60% of registered users
+- **Session Duration**: 8+ minutes average
+- **Feature Adoption**: 70%+ users using core features
+- **Retention**: 40%+ at 30 days, 20%+ at 90 days
+
+### Health Outcomes
+- **Goal Achievement**: 60%+ users achieve primary health goals
+- **Habit Formation**: 50%+ users maintain habits for 6+ months
+- **Nutritional Improvement**: Measurable dietary quality improvements
+
+### Business Metrics
+- **User Acquisition Cost**: <$25 per user
+- **Lifetime Value**: >$100 per user
+- **Monthly Recurring Revenue**: $50K+ by end of year 1
+- **Net Promoter Score**: 50+ indicating strong satisfaction
+
+## Development Approach
+
+### Methodology
+- **Spec-Driven Development**: All features require complete specifications before implementation
+- **Agile Development**: 2-week sprints with continuous integration
+- **User-Centered Design**: Regular user testing and feedback incorporation
+- **Quality-First**: 80%+ test coverage, comprehensive documentation
+
+### Key Principles
+1. **Specification-First**: Never start coding without complete specifications
+2. **EARS Notation**: All requirements use Easy Approach to Requirements Syntax
+3. **Three-Phase Workflow**: Requirements → Design → Implementation
+4. **Continuous Validation**: Regular spec compliance checking
+
+## Resource Requirements
+
+### Development Team
+- **Frontend Developers**: 2-3 developers (React/TypeScript)
+- **Backend Developers**: 1-2 developers (Firebase/Node.js)
+- **AI/ML Engineers**: 1-2 engineers (Grok API, personalization)
+- **UI/UX Designers**: 1-2 designers (user experience, gamification)
+- **QA Engineers**: 1 engineer (testing, validation)
+
+### Infrastructure
+- **Hosting**: Firebase hosting and services
+- **AI Services**: Grok API, nutrition databases
+- **Monitoring**: Performance monitoring, error tracking
+- **Security**: Security audits, compliance tools
+
+## Timeline & Milestones
+
+### Phase 1: Foundation (Months 1-6)
+- **Q1 2024**: Core gamification system, basic AI coach, nutrition tracking
+- **Q2 2024**: Social features, quest system, mobile optimization
+
+### Phase 2: Enhancement (Months 7-12)
+- **Q3 2024**: Advanced AI features, wearable integration, native mobile apps
+- **Q4 2024**: Professional network, enterprise features, international expansion
+
+### Phase 3: Platform (Months 13-24)
+- **2025**: API ecosystem, marketplace, advanced analytics, predictive insights
+
+## Communication & Governance
+
+### Decision-Making Authority
+- **Product Decisions**: Product Owner with stakeholder input
+- **Technical Decisions**: Lead Developer with team consensus
+- **Business Decisions**: Executive team with board approval
+- **User Experience**: UX Lead with user research validation
+
+### Reporting Structure
+- **Weekly**: Development team standups and progress reports
+- **Monthly**: Stakeholder updates and KPI reviews
+- **Quarterly**: Strategic reviews and roadmap adjustments
+- **Annually**: Comprehensive business review and planning
+
+## Quality Assurance
+
+### Standards
+- **Code Quality**: TypeScript strict mode, ESLint, Prettier
+- **Testing**: 80%+ coverage, unit, integration, and E2E tests
+- **Performance**: Core Web Vitals compliance, <3s load times
+- **Security**: Regular audits, vulnerability scanning, secure coding practices
+
+### Review Process
+- **Code Reviews**: All code changes require peer review
+- **Spec Reviews**: All specifications reviewed before implementation
+- **User Testing**: Regular usability testing and feedback sessions
+- **Performance Monitoring**: Continuous monitoring and optimization
+
+## Change Management
+
+### Change Control Process
+1. **Change Request**: Documented request with business justification
+2. **Impact Assessment**: Technical and business impact analysis
+3. **Approval**: Appropriate stakeholder approval based on impact
+4. **Implementation**: Controlled rollout with monitoring
+5. **Review**: Post-implementation review and lessons learned
+
+### Version Control
+- **Specifications**: All specs version controlled in `.cursor/.specify/specs/`
+- **Code**: Git-based version control with feature branches
+- **Documentation**: Living documentation updated with changes
+- **Releases**: Semantic versioning with release notes
+
+## Appendices
+
+### A. Technical Specifications
+- Detailed architecture documentation in `docs/architecture/`
+- API contracts in `docs/contracts/`
+- Component specifications in `docs/ui-components/`
+
+### B. Business Documentation
+- Product strategy in `docs/product.md`
+- Gamification features in `docs/gamification/`
+- User research and personas
+
+### C. Compliance & Legal
+- Privacy policy and data handling procedures
+- Terms of service and user agreements
+- Regulatory compliance requirements
+
+---
+
+**Document Approval**
+- **Product Owner**: [Signature] [Date]
+- **Technical Lead**: [Signature] [Date]
+- **Executive Sponsor**: [Signature] [Date]
+
+**Next Review Date**: [Date]
+**Document Owner**: Product Owner
+**Distribution**: All stakeholders, development team, executive team

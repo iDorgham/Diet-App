@@ -1,0 +1,93 @@
+---
+description: Enforce consistent folder structure for clarity and maintainability
+globs: 
+alwaysApply: true
+---
+
+# File Structure Standards
+
+## Context
+
+- Applies when adding files or directories
+- Ensures consistency in React TypeScript projects
+- Maintains clear separation of concerns
+
+## Requirements
+
+- Store core pages in `src/pages/` directory
+- Place shared components in `src/components/`, separating primitives from custom components
+- Keep utilities and helpers in `src/utils/`
+- Store types and interfaces in `src/types/`
+- Place services and API logic in `src/services/`
+- Store hooks in `src/hooks/`
+- Keep styles in `src/styles/`
+- Store tests in `src/test/` or near related files for integration tests
+- Use descriptive file and directory names
+- Follow consistent naming conventions across the project
+- Maintain proper import/export structure
+- Use index files for clean imports when appropriate
+
+## Examples
+
+<example>
+  Minimal structure:
+  ```bash
+  src/
+  ├── components/           # Reusable UI components
+  │   ├── ui/              # Basic UI primitives
+  │   ├── forms/           # Form components
+  │   └── layout/          # Layout components
+  ├── pages/               # Page components
+  ├── hooks/               # Custom React hooks
+  ├── services/            # API and business logic
+  ├── types/               # TypeScript type definitions
+  ├── utils/               # Utility functions
+  ├── styles/              # Global styles and themes
+  └── test/                # Test files
+  ```
+</example>
+
+<example type="invalid">
+  ```bash
+  src/
+  ├── stuff/               # Unclear naming
+  ├── components/          # Mixed concerns
+  │   ├── Button.tsx
+  │   ├── api.ts          # API logic in components
+  │   └── utils.ts        # Utils in components
+  └── pages/
+      ├── home.tsx
+      ├── home.test.tsx   # Tests mixed with pages
+      └── home.styles.css # Styles mixed with pages
+  ```
+</example>
+
+## Import Conventions
+
+- Use relative imports for local files
+- Use absolute imports for shared utilities
+- Group imports: external libraries first, then internal modules
+- Use named exports for better tree-shaking
+- Use default exports for main component files
+- Maintain consistent import ordering
+
+## File Naming & Organization
+
+| Type                | Convention                  | Example                  |
+|---------------------|-----------------------------|--------------------------|
+| React components    | `PascalCase.tsx`            | `UserProfile.tsx`        |
+| Utility functions   | `camelCase.ts`              | `formatDate.ts`          |
+| Custom React hooks  | `use` prefix + `camelCase`  | `useAuth.ts`             |
+| Types/Interfaces    | `PascalCase.ts`             | `UserTypes.ts`           |
+| Constants           | `UPPER_SNAKE_CASE.ts`       | `API_ENDPOINTS.ts`       |
+| Test files          | `*.test.ts` or `*.spec.ts`  | `UserProfile.test.tsx`   |
+
+## Component Organization
+
+- Keep components small and focused on single responsibility
+- Use composition over inheritance
+- Separate presentational and container components
+- Group related components in subdirectories
+- Use index files for clean component exports
+- Maintain consistent prop interfaces
+- Document component APIs with JSDoc comments

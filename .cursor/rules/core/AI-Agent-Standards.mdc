@@ -1,0 +1,76 @@
+---
+description: Enforces AI to correctly use agent tools and maintain development standards
+globs: 
+alwaysApply: true
+---
+
+# AI Agent General Standards
+
+## Context
+
+- Core standards for limiting or permitting AI-driven file interactions
+- Ensures safe and minimal modifications
+- Maintains code quality and consistency
+
+## Requirements
+
+- If crucial details are missing in the user's request, request them from the user
+- Use proper file editing tools to modify files; avoid direct shell commands for file creation/editing
+- Read files using appropriate tools; ensure complete content is retrieved
+- Always append `| cat` to non-interactive commands for proper output
+- Focus on performance, accessibility, and maintainability
+- Both frontend user-experience and code developer-experience matter
+- Do not modify code or comments which are not related to the current task
+- Keep solutions short and direct; do not rewrite entire code unless explicitly asked
+- Ask for clarification if something remains unclear
+- Provide complete, working, and functional code
+- Never provide partial snippets, placeholders, or TODO comments
+- Fix all linter errors before completing tasks
+- Preserve existing code structures and functionalities
+- Use meaningful variable and function names
+- Add proper error handling and validation
+- Include comprehensive documentation for complex logic
+
+## Examples
+
+<example>
+  // Good: Complete, working function with proper error handling
+  function calculateTotal(items: Item[]): number {
+    if (!Array.isArray(items)) {
+      throw new Error('Items must be an array');
+    }
+    
+    return items.reduce((total, item) => {
+      if (typeof item.price !== 'number' || item.price < 0) {
+        throw new Error('Invalid item price');
+      }
+      return total + item.price;
+    }, 0);
+  }
+</example>
+
+<example type="invalid">
+  // Bad: Incomplete function with placeholder
+  function calculateTotal(items) {
+    // TODO: Implement calculation logic
+    return 0;
+  }
+  
+  // Bad: Using shell commands for file operations
+  echo "content" > file.txt
+</example>
+
+## Code Quality Standards
+
+- Write self-documenting code with clear variable names
+- Implement proper error handling for all functions
+- Use TypeScript for type safety when applicable
+- Follow consistent code formatting and style
+- Include JSDoc comments for public APIs
+- Write comprehensive unit tests for all functions
+- Use meaningful commit messages following conventional commits
+- Implement proper logging for debugging and monitoring
+- Follow security best practices in all code
+- Optimize for performance and bundle size
+- Ensure accessibility compliance in UI components
+- Use proper dependency management and versioning

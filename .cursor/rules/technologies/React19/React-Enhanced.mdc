@@ -1,0 +1,89 @@
+---
+description: Use React rules when building UI to produce maintainable components
+globs: src/**/*.{tsx,jsx}
+alwaysApply: false
+---
+
+# React Enhanced Rules
+
+## Context
+
+- For developing React components with modern practices
+- Emphasizes clear, safe JSX and React best practices
+- Focuses on performance and maintainability
+
+## Requirements
+
+- Client components must start with `"use client"` directive when needed
+- Server components require no directive (default in React)
+- Never use `import * as React from "react"`; use explicit imports instead
+- Use `{condition ? <Element /> : null}` for conditional JSX rendering; avoid `&&`
+- Destructure props/state for clarity
+- Keep boolean props accurate (e.g., `<Button disabled />`)
+- Set `displayName` on complex components or contexts
+- Clean up side effects in `useEffect` (e.g., timers, listeners)
+- Handle refs as standard props in modern React
+- No direct DOM manipulation or `dangerouslySetInnerHTML`
+- Avoid using array index as a key; prefer stable IDs
+- Use `rel="noreferrer noopener"` with `target="_blank"`
+- Use `useCallback`/`React.memo`/`useMemo` only if performance gains are measured
+- Keep naming consistent while destructuring `useState`
+- Custom hooks must call at least one React hook
+- Use lazy initialization in `useState` for expensive computations
+- Define default props as constants outside components
+- Avoid calling `useState` setter in `useEffect` without functional update or guard
+- Avoid defining components inside another component's render
+- Provide stable dependencies for `useCallback`
+- Declare hooks at component's top level (not in loops/conditions)
+
+## Examples
+
+<example>
+  import { useCallback, useState } from "react";
+
+  interface ProductPageProps {
+    productId: string;
+  }
+
+  function ProductPage({ productId }: ProductPageProps) {
+    const [isLoading, setIsLoading] = useState(false);
+    
+    const handleSubmit = useCallback(() => {
+      setIsLoading(true);
+      // Handle submission logic
+    }, [productId]);
+
+    return (
+      <div>
+        <button onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Loading..." : "Submit"}
+        </button>
+      </div>
+    );
+  }
+</example>
+
+<example type="invalid">
+  // Missing dependencies => new function on every render
+  const handleClick = useCallback(() => {
+    // ...
+  });
+  
+  // Defining component inside render
+  function ParentComponent() {
+    function ChildComponent() {
+      return <div>Child</div>;
+    }
+    return <ChildComponent />;
+  }
+</example>
+
+## Performance Guidelines
+
+- Use React.memo for expensive components
+- Implement proper dependency arrays in hooks
+- Memoize expensive calculations with useMemo
+- Avoid creating objects/functions in render
+- Use useCallback for event handlers passed to child components
+- Implement proper key props for list items
+- Use lazy loading for large components

@@ -1,0 +1,39 @@
+---
+description: Enforce API versioning prefix on backend route definitions
+globs: backend/routes/**/*.{js,ts}
+alwaysApply: false
+---
+# API Versioning Enforcement
+
+<rule>
+name: api_versioning_enforcement
+description: Ensure all Express-like routes use a versioned base path (/api/vN/)
+filters:
+  - type: file_extension
+    pattern: "\.(js|ts)$"
+  - type: content
+    pattern: "(?:app|router)\.(get|post|put|delete|patch)\(\s*['\"]/(?!api/v\d+/)"
+
+actions:
+  - type: enforce
+    conditions:
+      - pattern: "(?:app|router)\.(get|post|put|delete|patch)\(\s*['\"]/(?!api/v\d+/)"
+        message: "Route should begin with a versioned prefix like /api/v1/."
+
+  - type: suggest
+    message: |
+      API versioning best practices:
+      - Use a stable, explicit prefix: /api/v1/
+      - Bump major version on breaking changes; keep previous versions during migration
+      - Centralize router mounting, e.g., app.use('/api/v1', v1Router)
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+examples:
+  - input: |
+      router.get('/users', handler)
+    output: |
+      router.get('/api/v1/users', handler)

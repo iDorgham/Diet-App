@@ -1,0 +1,44 @@
+---
+description: Enforce a shared HTTP client usage on the frontend and discourage inline fetch/axios instances
+globs: src/**/*.{ts,tsx,js,jsx}
+alwaysApply: false
+---
+# Frontend HTTP Client Standard
+
+<rule>
+name: frontend_http_client_standard
+description: Require imports from a shared client (e.g., src/services/http) and flag ad-hoc fetch/axios instances
+filters:
+  - type: file_extension
+    pattern: "\.(ts|tsx|js|jsx)$"
+  - type: content
+    pattern: "(fetch\(|axios\.(get|post|put|delete|patch)\()"
+
+actions:
+  - type: enforce
+    conditions:
+      - pattern: "\bfetch\(\s*['\"]https?://"
+        message: "Avoid hardcoded absolute URLs; use the shared HTTP client and environment-based baseURL."
+      - pattern: "\baxios\.(get|post|put|delete|patch)\("
+        pattern_negate: "import\s+http\s+from\s+['\"](?:@/|src/)services/http['\"]"
+        message: "Use the shared client import (src/services/http) instead of direct axios.* calls."
+
+  - type: suggest
+    message: |
+      Frontend HTTP best practices:
+      - Centralize baseURL, interceptors, and auth in src/services/http
+      - Prefer relative resource paths (e.g., '/users') and let the client add baseURL
+      - Handle retries and error normalization in the client wrapper
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+examples:
+  - input: |
+      import axios from 'axios'
+      const res = await axios.get('https://api.example.com/users')
+    output: |
+      import http from '@/services/http'
+      const res = await http.get('/users')

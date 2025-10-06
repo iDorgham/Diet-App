@@ -1,0 +1,30 @@
+---
+description: Global scoping for rule performance; exclude generated, build, and logs directories
+globs: "**/*"
+alwaysApply: true
+---
+# Rule Scoping and Exclusions
+
+<rule>
+name: rule_scoping_and_exclusions
+description: Apply common directory scoping recommendations and ignore globs to improve performance and reduce false positives
+filters:
+  - type: file_extension
+    pattern: "\.(js|ts|tsx|jsx|json|sql|md|mdc)$"
+
+actions:
+  - type: suggest
+    message: |
+      Scoping recommendations applied:
+      - Backend-only rules should limit to: backend/src/**, backend/routes/**, backend/services/**
+      - Frontend-only rules should limit to: src/**
+      - SQL rules should limit to: backend/migrations/**/*.sql
+      Ignored paths for all rules:
+      - **/node_modules/**, **/dist/**, **/build/**, **/public/**, **/logs/**,
+        **/dataconnect-generated/**, **/*.min.*
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>
+

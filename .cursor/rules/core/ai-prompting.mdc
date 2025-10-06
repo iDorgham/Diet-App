@@ -1,0 +1,36 @@
+# AI Prompting Rules
+
+## Prompt Engineering Guidelines
+- Be specific and clear in your requests
+- Provide context about the current state and desired outcome
+- Use structured prompts with clear sections
+- Include relevant code examples when asking for modifications
+- Specify the programming language and framework being used
+
+## Code Generation Best Practices
+- Always generate production-ready code with proper error handling
+- Include comprehensive comments and documentation
+- Follow the project's established patterns and conventions
+- Generate corresponding tests for new functionality
+- Ensure code is optimized and follows best practices
+
+## Review and Validation
+- Always review generated code before implementation
+- Test generated code thoroughly
+- Validate that generated code meets requirements
+- Check for security vulnerabilities and performance issues
+- Ensure generated code integrates properly with existing systems
+
+## Context Management
+- Maintain awareness of the current project structure
+- Reference existing code patterns and conventions
+- Consider the impact of changes on related components
+- Keep track of dependencies and their versions
+- Document any architectural decisions made during generation
+
+## Iterative Improvement
+- Use feedback to improve future prompts
+- Learn from successful and unsuccessful generations
+- Refine prompts based on project-specific needs
+- Share effective prompt patterns with the team
+- Continuously improve the development workflow

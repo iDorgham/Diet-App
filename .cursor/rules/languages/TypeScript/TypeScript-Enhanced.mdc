@@ -1,0 +1,69 @@
+---
+description: Enforce strict typing when coding to ensure reliable TypeScript usage
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# TypeScript Enhanced Rules
+
+## Context
+
+- Applies to both TypeScript and JavaScript files
+- Encourages strict, clear typing, and modern JavaScript practices
+- Focuses on type safety and code reliability
+
+## Requirements
+
+- Prefer ESM over CommonJS imports
+- Avoid `any` type; use `unknown`, generics, or precise types instead
+- Remove unused variables and expressions
+- Use `as const` for exact object types
+- Prefer `??` over `||` for nullish coalescing
+- Handle promises with `await` or `.then()`
+- Throw `Error` instances, not strings or objects
+- Avoid non-null assertions (`!`) and redundant `?.!`
+- Never use `eval()` or dynamic code execution
+- Use `import` instead of `require()`
+- Add comments for `@ts-<directive>` usage
+- Favor functional programming; limit OOP to custom errors
+- Ensure both operands of `+` are the same type
+- Use namespaces only for declaration merging; avoid `module`
+- Mark immutable component props as `readonly`
+- Use optional chaining (`?.`) to prevent runtime errors
+- Avoid redundant type annotations
+- Prefer `[]` over generic array constructors
+- Prevent duplicate values in enums and union types
+
+## Examples
+
+<example>
+  function parseData(data: unknown): string | null {
+    if (typeof data === "string") return data;
+    return null;
+  }
+  
+  const config = {
+    apiUrl: "https://api.example.com",
+    timeout: 5000
+  } as const;
+</example>
+
+<example type="invalid">
+  function parseData(data: any): any {
+    return data;
+  }
+  
+  const config = {
+    apiUrl: "https://api.example.com",
+    timeout: 5000
+  };
+</example>
+
+## Type Safety Guidelines
+
+- Use strict type checking with `strict: true` in tsconfig.json
+- Prefer interface over type for object shapes
+- Use union types for multiple possible values
+- Implement proper error handling with typed errors
+- Use generic constraints for reusable components
+- Leverage TypeScript's utility types (Partial, Pick, Omit, etc.)
