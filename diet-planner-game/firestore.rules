@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Ultra-permissive rules for testing
+    // WARNING: This allows anyone to read/write all data!
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

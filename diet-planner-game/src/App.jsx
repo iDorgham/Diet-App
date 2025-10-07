@@ -3,18 +3,21 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, onSnapshot } from 'firebase/firestore';
 import { Heart, Star, Lock, CheckCircle, RefreshCw, XCircle, Loader, Dumbbell, Droplet, Gift, BookOpen, Home, ListChecks, ShoppingCart, Users, ClipboardList, TrendingUp, Wallet, Scale, Activity, MapPin, BatteryCharging, Coffee, Sun, Utensils, Eye, User, Zap, ChevronDown, MessageSquare, Globe, Clock, Filter, ChevronLeft, ChevronRight, Archive, LineChart, Phone, Link, Minus, Plus } from 'lucide-react';
+import { ShadcnDemo } from './components/ShadcnDemo';
+import { TestShadcn } from './TestShadcn';
 
 // --- Global Variables (Provided by Canvas Environment) ---
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'diet-planner-game';
 // For local development, you need to replace this with your actual Firebase configuration
 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-    // Replace these with your actual Firebase project configuration
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    // Your actual Firebase project configuration
+    apiKey: "AIzaSyBSHipn2djImGw4OPNWU06fBq4T_PCAST0",
+    authDomain: "diet-planner-game.firebaseapp.com",
+    projectId: "diet-planner-game",
+    storageBucket: "diet-planner-game.firebasestorage.app",
+    messagingSenderId: "803776250779",
+    appId: "1:803776250779:web:0c6cda616b5c15d17c973e",
+    measurementId: "G-TJ5PXEFCL9"
 };
 const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
@@ -2188,8 +2191,10 @@ const AppContent = ({ auth, db, userId, progress, setProgress, userProfile, setU
         const profileDocRef = doc(db, `artifacts/${appId}/users/${userId}/data`, 'profile');
 
         const initializeUser = async () => {
-            const progressSnap = await getDoc(userDocRef);
-            const profileSnap = await getDoc(profileDocRef);
+            try {
+                console.log("🔍 Initializing user data...");
+                const progressSnap = await getDoc(userDocRef);
+                const profileSnap = await getDoc(profileDocRef);
 
             const defaultProgress = {
                 score: 10, coins: 2000, recipesUnlocked: 10, hasClaimedGift: false,
@@ -2248,12 +2253,34 @@ const AppContent = ({ auth, db, userId, progress, setProgress, userProfile, setU
                 await setDoc(profileDocRef, defaultProfile);
             }
             
-            setIsAuthReady(true);
-            return () => {
-                unsubProgress();
-                unsubProfile();
-            };
-
+                console.log("✅ User data initialized successfully");
+                setIsAuthReady(true);
+                return () => {
+                    unsubProgress();
+                    unsubProfile();
+                };
+            } catch (error) {
+                console.error("❌ Failed to initialize user data:", error);
+                console.log("⚠️ Setting auth ready with fallback data due to Firestore error");
+                
+                // Set fallback data and mark as ready
+                const defaultProgress = {
+                    score: 10, coins: 2000, recipesUnlocked: 10, hasClaimedGift: false,
+                    level: 1, currentXP: 0,
+                    dailyCheckInTime: 0, lastExerciseLog: 0, lastWaterLog: 0
+                };
+                const defaultProfile = {
+                    userName: 'Yasser', dietType: 'Keto Diet', bodyType: DUMMY_PREFS_OPTIONS.BODY_TYPES[1], weight: '175 lbs',
+                    age: 30, height: 180, bloodType: DUMMY_PREFS_OPTIONS.BLOOD_TYPES[0], 
+                    marketLocation: DUMMY_PREFS_OPTIONS.MARKET_LOCATIONS[0],
+                    allergies: 'None', preferredIngredients: DUMMY_FOOD_PREFS.PREFERRED_INGREDIENTS, 
+                    ignoredIngredients: DUMMY_FOOD_PREFS.IGNORED_INGREDIENTS,
+                };
+                
+                setProgress(defaultProgress);
+                setUserProfile(defaultProfile);
+                setIsAuthReady(true);
+            }
         };
         
         // This should only run once auth is confirmed
@@ -2773,6 +2800,7 @@ const App = () => {
     // App state
     const [activePage, setActivePage] = useState('Home');
     const [message, setMessage] = useState('');
+    const [showShadcnDemo, setShowShadcnDemo] = useState(true);
     const [progress, setProgress] = useState({ score: 0, coins: 0, recipesUnlocked: 0, level: 1, currentXP: 0 });
     // Initialize profile with ALL fields now expected by SettingsManager
     const [userProfile, setUserProfile] = useState({ 
@@ -2863,70 +2891,218 @@ const App = () => {
     useEffect(() => {
         const initializeFirebase = async () => {
             try {
+                console.log("🔥 Initializing Firebase...");
                 const app = initializeApp(firebaseConfig);
                 const firestore = getFirestore(app);
                 const firebaseAuth = getAuth(app);
 
                 setDb(firestore);
                 setAuth(firebaseAuth);
+                console.log("✅ Firebase initialized successfully");
 
                 // Sign in using the custom token provided by the environment
                 if (initialAuthToken) {
+                    console.log("🔐 Signing in with custom token...");
                     await signInWithCustomToken(firebaseAuth, initialAuthToken);
                 } else {
+                    console.log("🔐 Signing in anonymously...");
                     await signInAnonymously(firebaseAuth);
                 }
+                console.log("✅ Authentication successful");
             } catch (error) {
-                console.error("Firebase initialization or sign-in failed:", error);
+                console.error("❌ Firebase initialization or sign-in failed:", error);
                 setMessage(`❌ Failed to initialize application: ${error.message}`);
+                
+                // Set a fallback state to prevent infinite loading
+                setTimeout(() => {
+                    console.log("⚠️ Setting fallback state due to Firebase error");
+                    setAuth('error');
+                    setDb('error');
+                }, 5000);
             }
         };
 
-        initializeFirebase();
+        // Add timeout to prevent infinite loading
+        const timeoutId = setTimeout(() => {
+            console.log("⏰ Firebase initialization timeout - setting fallback state");
+            setAuth('timeout');
+            setDb('timeout');
+        }, 10000);
+
+        initializeFirebase().finally(() => {
+            clearTimeout(timeoutId);
+        });
     }, []);
 
     // 2. Auth State Listener (Get User ID)
     useEffect(() => {
-        if (!auth) return;
+        if (!auth || auth === 'error' || auth === 'timeout') return;
 
+        console.log("🔍 Setting up auth state listener...");
         const unsubscribe = onAuthStateChanged(auth, (user) => {
+            console.log("👤 Auth state changed:", user ? `User ID: ${user.uid}` : "No user");
             if (user) {
                 setUserId(user.uid);
+                console.log("✅ User ID set:", user.uid);
             } else {
                 setUserId(null);
+                console.log("❌ User ID cleared");
             }
         });
 
         return () => unsubscribe();
     }, [auth]);
 
-    // Only render content when Firebase Auth and Firestore instances are ready
+    // Handle different loading states
+    console.log("🔍 Loading check - auth:", !!auth, "db:", !!db, "userId:", !!userId);
     if (!auth || !db || !userId) {
+        // Check if we're in an error or timeout state
+        if (auth === 'error' || auth === 'timeout' || db === 'error' || db === 'timeout') {
+            return (
+                <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+                    <div className="text-center max-w-md mx-auto p-6">
+                        <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+                        <h2 className="text-xl font-bold text-gray-800 mb-2">
+                            {auth === 'timeout' || db === 'timeout' ? 'Connection Timeout' : 'Connection Error'}
+                        </h2>
+                        <p className="text-gray-600 mb-4">
+                            {auth === 'timeout' || db === 'timeout' 
+                                ? 'Firebase connection timed out. This might be due to network issues or Firestore configuration.'
+                                : 'Failed to connect to Firebase. Please check your configuration and try again.'
+                            }
+                        </p>
+                        <div className="space-y-3">
+                            <button 
+                                onClick={() => window.location.reload()}
+                                className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                            >
+                                🔄 Retry Connection
+                            </button>
+                            <button 
+                                onClick={async () => {
+                                    try {
+                                        // Simple Firebase connection test
+                                        const { initializeApp } = await import('firebase/app');
+                                        const { getAuth, signInAnonymously } = await import('firebase/auth');
+                                        
+                                        const firebaseConfig = {
+                                            apiKey: "AIzaSyBSHipn2djImGw4OPNWU06fBq4T_PCAST0",
+                                            authDomain: "diet-planner-game.firebaseapp.com",
+                                            projectId: "diet-planner-game",
+                                            storageBucket: "diet-planner-game.firebasestorage.app",
+                                            messagingSenderId: "803776250779",
+                                            appId: "1:803776250779:web:0c6cda616b5c15d17c973e",
+                                            measurementId: "G-TJ5PXEFCL9"
+                                        };
+                                        
+                                        const app = initializeApp(firebaseConfig);
+                                        const auth = getAuth(app);
+                                        
+                                        try {
+                                            const userCredential = await signInAnonymously(auth);
+                                            alert(`✅ Firebase connection successful!\nUser ID: ${userCredential.user.uid}\n\nNote: Firestore API needs to be enabled for full functionality.`);
+                                        } catch (authError) {
+                                            alert(`❌ Authentication failed: ${authError.message}`);
+                                        }
+                                    } catch (error) {
+                                        alert(`❌ Firebase test failed: ${error.message}`);
+                                    }
+                                }}
+                                className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
+                            >
+                                🔥 Test Firebase Connection
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
+        // Normal loading state
         return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-50">
-                <Loader className="animate-spin w-8 h-8 text-indigo-600 mr-3" />
-                <p className="text-gray-600 font-semibold">Connecting to Firebase...</p>
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+                <div className="flex items-center mb-4">
+                    <Loader className="animate-spin w-8 h-8 text-indigo-600 mr-3" />
+                    <p className="text-gray-600 font-semibold">Connecting to Firebase...</p>
+                </div>
+                <button 
+                    onClick={async () => {
+                        try {
+                            // Simple Firebase connection test
+                            const { initializeApp } = await import('firebase/app');
+                            const { getAuth, signInAnonymously } = await import('firebase/auth');
+                            
+                            const firebaseConfig = {
+                                apiKey: "AIzaSyBSHipn2djImGw4OPNWU06fBq4T_PCAST0",
+                                authDomain: "diet-planner-game.firebaseapp.com",
+                                projectId: "diet-planner-game",
+                                storageBucket: "diet-planner-game.firebasestorage.app",
+                                messagingSenderId: "803776250779",
+                                appId: "1:803776250779:web:0c6cda616b5c15d17c973e",
+                                measurementId: "G-TJ5PXEFCL9"
+                            };
+                            
+                            const app = initializeApp(firebaseConfig);
+                            const auth = getAuth(app);
+                            
+                            try {
+                                const userCredential = await signInAnonymously(auth);
+                                alert(`✅ Firebase connection successful!\nUser ID: ${userCredential.user.uid}\n\nNote: Firestore API needs to be enabled for full functionality.`);
+                            } catch (authError) {
+                                alert(`❌ Authentication failed: ${authError.message}`);
+                            }
+                        } catch (error) {
+                            alert(`❌ Firebase test failed: ${error.message}`);
+                        }
+                    }}
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                >
+                    🔥 Test Firebase Connection
+                </button>
+            </div>
+        );
+    }
+
+    // Show shadcn/ui demo if toggled
+    if (showShadcnDemo) {
+        return (
+            <div className="relative">
+                <button
+                    onClick={() => setShowShadcnDemo(false)}
+                    className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                >
+                    ← Back to App
+                </button>
+                <TestShadcn />
             </div>
         );
     }
 
     return (
-        <AppContent 
-            auth={auth} 
-            db={db} 
-            userId={userId} 
-            activePage={activePage} 
-            setActivePage={setActivePage}
-            message={message}
-            setMessage={setMessage}
-            progress={progress}
-            setProgress={setProgress}
-            userProfile={userProfile}
-            setUserProfile={setUserProfile}
-            handleTaskCompletion={handleTaskCompletion}
-            updateProgressInDb={updateProgressInDb} // Passed for use in reward claim handlers
-            updateProfileInDb={updateProfileInDb} // NEW: Passed for settings manager
-        />
+        <div className="relative">
+            <button
+                onClick={() => setShowShadcnDemo(true)}
+                className="fixed top-4 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+            >
+                🎨 View shadcn/ui Demo
+            </button>
+            <AppContent 
+                auth={auth} 
+                db={db} 
+                userId={userId} 
+                activePage={activePage} 
+                setActivePage={setActivePage}
+                message={message}
+                setMessage={setMessage}
+                progress={progress}
+                setProgress={setProgress}
+                userProfile={userProfile}
+                setUserProfile={setUserProfile}
+                handleTaskCompletion={handleTaskCompletion}
+                updateProgressInDb={updateProgressInDb} // Passed for use in reward claim handlers
+                updateProfileInDb={updateProfileInDb} // NEW: Passed for settings manager
+            />
+        </div>
     );
 };
 

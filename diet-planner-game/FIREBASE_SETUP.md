@@ -21,12 +21,13 @@ Open `src/App.jsx` and find this section around line 10:
 ```javascript
 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
     // Replace these with your actual Firebase project configuration
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBSHipn2djImGw4OPNWU06fBq4T_PCAST0",
+  authDomain: "diet-planner-game.firebaseapp.com",
+  projectId: "diet-planner-game",
+  storageBucket: "diet-planner-game.firebasestorage.app",
+  messagingSenderId: "803776250779",
+  appId: "1:803776250779:web:0c6cda616b5c15d17c973e",
+  measurementId: "G-TJ5PXEFCL9"
 };
 ```
 
@@ -34,9 +35,9 @@ Replace the placeholder values with your actual Firebase configuration:
 
 ```javascript
 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-    apiKey: "your-actual-api-key",
+    apiKey: "AIzaSyBSHipn2djImGw4OPNWU06fBq4T_PCAST0",
     authDomain: "your-project-id.firebaseapp.com",
-    projectId: "your-project-id",
+    projectId: "diet-planner-game",
     storageBucket: "your-project-id.appspot.com",
     messagingSenderId: "your-sender-id",
     appId: "your-app-id"

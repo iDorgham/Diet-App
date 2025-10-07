@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Connection Test - Diet Planner Game</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+        
+        .test-section h3 {
+            margin-top: 0;
+            color: #4CAF50;
+            font-size: 1.3em;
+        }
+        
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background: #2196F3;
+        }
+        
+        .btn-secondary:hover {
+            background: #1976D2;
+        }
+        
+        .btn-warning {
+            background: #FF9800;
+        }
+        
+        .btn-warning:hover {
+            background: #F57C00;
+        }
+        
+        .results {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #bbdefb;
+        }
+        
+        .status.success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .instructions {
+            background: #fff3e0;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #ef6c00;
+        }
+        
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin: 8px 0;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .feature-item h4 {
+            margin: 0 0 8px 0;
+            color: #4CAF50;
+        }
+        
+        .feature-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 Firebase Test Suite</h1>
+            <p>Test Firebase connection and data persistence for Diet Planner Game</p>
+        </div>
+        
+        <div class="content">
+            <div class="instructions">
+                <h3>📋 How to Use This Test Suite</h3>
+                <ol>
+                    <li>Make sure your Firebase project is properly configured</li>
+                    <li>Ensure Firestore database is enabled in test mode</li>
+                    <li>Click "Run All Tests" to test everything at once</li>
+                    <li>Or use individual test buttons to test specific features</li>
+                    <li>Check the console and results area for detailed information</li>
+                </ol>
+            </div>
+            
+            <div class="test-section">
+                <h3>🚀 Quick Test Actions</h3>
+                <button class="btn" onclick="runAllTests()">Run All Tests</button>
+                <button class="btn btn-secondary" onclick="openTestUI()">Open Interactive UI</button>
+                <button class="btn btn-warning" onclick="clearResults()">Clear Results</button>
+            </div>
+            
+            <div class="test-section">
+                <h3>🔧 Individual Tests</h3>
+                <button class="btn" onclick="runTest('connection')">🔗 Test Connection</button>
+                <button class="btn" onclick="runTest('auth')">🔐 Test Authentication</button>
+                <button class="btn" onclick="runTest('write')">📝 Test Write</button>
+                <button class="btn" onclick="runTest('read')">📖 Test Read</button>
+                <button class="btn" onclick="runTest('realtime')">🔄 Test Realtime</button>
+                <button class="btn" onclick="runTest('profile')">👤 Test Profile</button>
+            </div>
+            
+            <div class="test-section">
+                <h3>📊 Test Results</h3>
+                <div id="status" class="status info">Ready to test Firebase connection</div>
+                <div id="results" class="results">Click "Run All Tests" to start testing Firebase connection and data persistence...\n\nThis test suite will verify:\n- Firebase connection\n- Anonymous authentication\n- Firestore read/write operations\n- Real-time data synchronization\n- User profile persistence\n- Game progress persistence\n\n</div>
+            </div>
+            
+            <div class="test-section">
+                <h3>✨ What Gets Tested</h3>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <h4>🔗 Connection</h4>
+                        <p>Verifies Firebase app initialization and service connectivity</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🔐 Authentication</h4>
+                        <p>Tests anonymous user authentication flow</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>📝 Data Writing</h4>
+                        <p>Tests writing data to Firestore database</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>📖 Data Reading</h4>
+                        <p>Tests reading data from Firestore database</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🔄 Real-time Sync</h4>
+                        <p>Tests real-time data synchronization with listeners</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>👤 User Profiles</h4>
+                        <p>Tests user profile data persistence and retrieval</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Firebase SDK -->
+    <script type="module">
+        import { FirebaseTestSuite } from './src/test/firebase-test-utils.js';
+        import { FirebaseTestRunner } from './src/test/firebase-test-runner.js';
+        
+        // Initialize test suite
+        window.testSuite = new FirebaseTestSuite();
+        window.testRunner = new FirebaseTestRunner();
+        
+        // Global functions for HTML buttons
+        window.runAllTests = async function() {
+            updateStatus('Running all Firebase tests...', 'info');
+            clearResults();
+            
+            try {
+                const summary = await window.testSuite.runAllTests();
+                displayResults(summary);
+                
+                if (summary.failed === 0) {
+                    updateStatus('All tests passed! 🎉', 'success');
+                } else {
+                    updateStatus(`${summary.failed} test(s) failed. Check results above.`, 'error');
+                }
+            } catch (error) {
+                updateStatus('Test suite failed', 'error');
+                addResult(`❌ Test suite error: ${error.message}`);
+            }
+        };
+        
+        window.runTest = async function(testType) {
+            updateStatus(`Running ${testType} test...`, 'info');
+            
+            try {
+                let result = false;
+                
+                switch (testType) {
+                    case 'connection':
+                        result = await window.testSuite.testConnection();
+                        break;
+                    case 'auth':
+                        result = await window.testSuite.testAuthentication();
+                        break;
+                    case 'write':
+                        result = await window.testSuite.testFirestoreWrite();
+                        break;
+                    case 'read':
+                        result = await window.testSuite.testFirestoreRead();
+                        break;
+                    case 'realtime':
+                        result = await window.testSuite.testRealtimeSync();
+                        break;
+                    case 'profile':
+                        result = await window.testSuite.testUserProfilePersistence();
+                        break;
+                    default:
+                        addResult(`❌ Unknown test type: ${testType}`);
+                        return;
+                }
+                
+                if (result) {
+                    updateStatus(`${testType} test passed! ✅`, 'success');
+                } else {
+                    updateStatus(`${testType} test failed ❌`, 'error');
+                }
+                
+            } catch (error) {
+                updateStatus(`${testType} test failed`, 'error');
+                addResult(`❌ ${testType} test error: ${error.message}`);
+            }
+        };
+        
+        window.openTestUI = function() {
+            window.testRunner.createTestUI();
+        };
+        
+        window.clearResults = function() {
+            document.getElementById('results').textContent = '';
+            updateStatus('Ready to test Firebase connection', 'info');
+        };
+        
+        function updateStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function addResult(message) {
+            const results = document.getElementById('results');
+            const timestamp = new Date().toLocaleTimeString();
+            results.textContent += `[${timestamp}] ${message}\n`;
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        function displayResults(summary) {
+            const results = document.getElementById('results');
+            results.textContent += `\n📊 TEST SUMMARY:\n`;
+            results.textContent += `Total Tests: ${summary.total}\n`;
+            results.textContent += `Passed: ${summary.passed} ✅\n`;
+            results.textContent += `Failed: ${summary.failed} ❌\n`;
+            results.textContent += `Success Rate: ${summary.successRate}%\n\n`;
+            
+            results.textContent += `📋 DETAILED RESULTS:\n`;
+            summary.results.forEach((result, index) => {
+                const status = result.passed ? '✅' : '❌';
+                results.textContent += `${index + 1}. ${status} ${result.test}\n`;
+                results.textContent += `   Details: ${result.details}\n`;
+                results.textContent += `   Time: ${result.timestamp}\n\n`;
+            });
+            
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        // Initialize
+        console.log('🔥 Firebase Test Suite loaded and ready!');
+        console.log('💡 Use the buttons above to test Firebase connection and data persistence');
+    </script>
+</body>
+</html>
